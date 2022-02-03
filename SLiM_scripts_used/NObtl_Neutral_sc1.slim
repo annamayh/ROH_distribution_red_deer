@@ -1,4 +1,4 @@
-// set up a simple neutral simulation
+// neutral simulation for no bottleneck pop history
 initialize() {
 	initializeMutationRate(1e-8);
 	
@@ -16,12 +16,11 @@ initialize() {
 
 // Create initial mainland population
 1 { sim.addSubpop("p1", 7500); }
-1:75000{if(sim.generation % 1000 == 0)print("Burn in generation " + sim.generation);}
+1:75000{if(sim.generation % 1000 == 0)print("Burn in generation " + sim.generation);} // progress report
 75030 late() { all_ids = p1.individuals.genomes;
 all_ids.outputVCF(filePath="/scratch/ahewett/ROH/NObtl/neutral_1/slim_out_sim_1");
 
-} //23 gens from initial introduction till now 
-
+} //output all genomes
 
 
 
