@@ -1,16 +1,16 @@
-// set up a simple neutral simulation
+// Pop history = Rum , model  = varied recombination 
 initialize() {
 	initializeMutationRate(1e-8);
 	
 	// m1 mutation type: neutral
-	initializeMutationType("m1", 0.5, "f", 0.0);//netrual mutations
+	initializeMutationType("m1", 0.5, "f", 0.0);//neutral mutations
 
 	
 	// g1 genomic element type: uses m1 for all mutations
 	initializeGenomicElementType("g1", m1, 1.0);
 
 	
-	// uniform chromosome of length 100 Mb with uniform recombination
+	// varied recombination in 10 windows based off Johnston et al. 2017
 	initializeGenomicElement(g1, 0, 99999999);
 	initializeRecombinationRate(c(1.75*10^-8, 1.23*10^-8, 0.89*10^-8, 0.81*10^-8, 0.74*10^-8, 0.80*10^-8, 0.87*10^-8, 1.05*10^-8, 1.20*10^-8, 0.67*10^-8), c(9999999, 19999999, 29999999, 39999999, 49999999, 59999999, 69999999, 79999999, 89999999, 99999999 ));
 }
