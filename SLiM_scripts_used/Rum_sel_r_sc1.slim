@@ -1,0 +1,38 @@
+// sim for Rum population with selection and varied recombiation
+initialize() {
+	initializeMutationRate(1e-8);
+	
+	// m1 mutation type: neutral
+	initializeMutationType("m1", 0.5, "f", 0.0);//neutral mutations
+	initializeMutationType("m2", 0.5, "g", 0.001, 0.2);//beneficial mutations
+	initializeMutationType("m3", 0.1, "g", -0.01, 0.2);//deleterious mutations h=0.1 assuming most del mutations are recessive 
+
+	
+	//deleterious:neutral:benificial occur in ratio 10:3:1 based off Kim et al. 2017
+	initializeGenomicElementType("g1", c(m3,m1,m2),c(10.0,3.0,1.0));
+
+	
+	// chromosome of length 100 Mb with varied recombination rate based off Johnston et al. 2017
+	initializeGenomicElement(g1, 0, 99999999);
+	initializeRecombinationRate(c(1.75*10^-8, 1.23*10^-8, 0.89*10^-8, 0.81*10^-8, 0.74*10^-8, 0.80*10^-8, 0.87*10^-8, 1.05*10^-8, 1.20*10^-8, 0.67*10^-8), c(9999999, 19999999, 29999999, 39999999, 49999999, 59999999, 69999999, 79999999, 89999999, 99999999 ));
+}
+
+// Create initial mainland population with Ne = 7500
+1 { sim.addSubpop("p1", 7500); }
+1:75000{if(sim.generation % 1000 == 0)print("Burn in generation " + sim.generation);} //to keep track of burn in time
+75000 { p1.setSubpopulationSize(100); } //now create bottleneck after burn in complete
+
+// Output after 30 generations later i.e. roughly present day
+75030 late() { all_ids = p1.individuals.genomes;
+all_ids.outputVCF(filePath="/scratch/ahewett/ROH/NewH0/sel_r_1/slim_out_sim_1"); //output all genomes of current pop 
+
+// also save mutations selection coefficients of population just in case need to be referred to
+mutations = all_ids.mutations.selectionCoeff;
+writeFile("/scratch/ahewett/ROH/NewH0/sel_r_1/sel_coeffs.txt", paste(c(mutations), sep="\n"));
+          
+
+} 
+
+
+
+

@@ -1,0 +1,29 @@
+// set up a simple neutral simulation
+initialize() {
+	initializeMutationRate(1e-8);
+	
+	// m1 mutation type: neutral
+	initializeMutationType("m1", 0.5, "f", 0.0);//netrual mutations
+
+	
+	// g1 genomic element type: uses m1 for all mutations
+	initializeGenomicElementType("g1", m1, 1.0);
+	
+	// uniform chromosome of length 100 Mb with uniform recombination
+	initializeGenomicElement(g1, 0, 99999999);
+	initializeRecombinationRate(1.038*10^-8);
+}
+
+// Create initial mainland population
+1 { sim.addSubpop("p1", 7500); }
+1:75000{if(sim.generation % 1000 == 0)print("Burn in generation " + sim.generation);}
+75000 { p1.setSubpopulationSize(10); } //more severe bottleneck 
+75005 { p1.setSubpopulationSize(100); }
+75030 late() { all_ids = p1.individuals.genomes;
+all_ids.outputVCF(filePath="/scratch/ahewett/ROH/btl/neutral_1/slim_out_sim_1");
+
+} //23 gens from initial introduction till now 
+
+
+
+
