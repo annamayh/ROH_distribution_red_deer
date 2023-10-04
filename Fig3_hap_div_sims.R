@@ -2,6 +2,8 @@
 library(tidyverse)
 library(janitor)
 
+## this script is v ugly but it works 
+
 setwd("H:/")
 
 ###################################
