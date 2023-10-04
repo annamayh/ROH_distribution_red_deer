@@ -1,5 +1,3 @@
-#### window scan r #####
-## for filtering ROH output for analysis of hot and coldspots
 ## includes filtering out first and last 40 sNPs and density control ### 
 
 library(plyr)
