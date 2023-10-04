@@ -1,5 +1,7 @@
 library(tidyverse)
 
+## code for comparing true ROH denisty from simulations with all possible SNPs Vs 3 iterations where SNPs are thinned to average SNP density in emperical dataset ##
+
 setwd("H:/") # make sure directory is the same location as the plink application #
 
 #Average ROH density in ROH found 
